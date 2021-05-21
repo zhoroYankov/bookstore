@@ -6,28 +6,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "books")
-public class Book {
+@Table(name = "authors")
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String ganre;
-
     @Column(unique = true, nullable = false)
-    private String title;
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private Author author;
+    @OneToMany(mappedBy = "author")
+    private Set<Book> books;
 
 }
