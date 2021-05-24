@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -15,7 +14,9 @@ import java.util.Set;
 @Builder
 public class UserDto {
 
-    private Integer id;
+    private Long id;
+
+    private String email;
 
     private String username;
 
@@ -25,11 +26,7 @@ public class UserDto {
 
     private Integer age;
 
-    private String emailAdress;
-
-    private LocalDateTime accountCreatedAt;
-
-    private Set<Book> takenBooks;
-
     private String role;
+
+    private Set<Book> books;
 }

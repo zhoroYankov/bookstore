@@ -37,7 +37,7 @@ public class User {
     private String lastName;
 
     @Column(nullable = false)
-    @Min(value = 14, message = "Sorry! You should be over 14 years old!")
+    @Min(value = 16, message = "Sorry! You should be over 16 years old!")
     private Integer age;
 
     @ManyToOne
