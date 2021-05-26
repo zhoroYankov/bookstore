@@ -17,14 +17,14 @@ import java.util.Set;
 public class UserService {
 
     private UserRepository userRepository;
-    private BookService bookService;
     private RoleService roleService;
+    private BookService bookService;
 
     @Autowired
-    public UserService(UserRepository userRepository, BookService bookService, RoleService roleService) {
+    public UserService(UserRepository userRepository, RoleService roleService, BookService bookService) {
         this.userRepository = userRepository;
-        this.bookService = bookService;
         this.roleService = roleService;
+        this.bookService = bookService;
     }
 
     public Set<UserDto> findAllUsers() {
@@ -53,7 +53,7 @@ public class UserService {
 
     public UserDto findByUsername(@NonNull String username) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new DataNotFoundException(String.format("User with username: %s is not found!", username)));
+                .orElseThrow(() -> new DataNotFoundException(String.format("User with username: %s, is not found!", username)));
 
         UserDto userDto = new UserDto();
 
@@ -71,7 +71,7 @@ public class UserService {
 
 
     public void saveUser(@NonNull UserDto userDto) {
-        Role role = roleService.f
+        Role role = roleService.findByRoleName("CLIENT");
 
 
         User user = new User();
@@ -81,11 +81,15 @@ public class UserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setAge(userDto.getAge());
-        user.setRole();
+        user.setRole(role);
         user.setBooks(userDto.getBooks());
 
         userRepository.save(user);
     }
 
+
+    public void deleteByUsername(@NonNull String username){
+        userRepository.findByUsername(username);
+    }
 
 }
