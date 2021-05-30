@@ -38,6 +38,17 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @PostMapping(value = "/{username}/{title}")
+    public ResponseEntity<HttpStatus> addBook(@PathVariable String username, @RequestParam String title){
+        userService.addBookToAccound(username, title);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping(value = "/{username}/{title}")
+    public ResponseEntity<HttpStatus> removeBook(@PathVariable String username, @RequestParam String title){
+        userService.removeBookFmAccount(username, title);
+        return ResponseEntity.ok().build();
+    }
 
     @DeleteMapping(value = "/{username}")
     public  ResponseEntity<HttpStatus> deleteByUsername(@PathVariable String username){

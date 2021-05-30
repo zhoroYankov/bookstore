@@ -7,29 +7,19 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "books")
-public class Book {
+@Table(name = "ganres")
+public class Ganre {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String title;
-
-
-    @ManyToOne
-    @JoinColumn(name = "ganre_id")
-    private Ganre genre;
-
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private Author author;
+    private String ganreName;
 
 }

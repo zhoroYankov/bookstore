@@ -1,15 +1,13 @@
 package com.advance_academy_project.bookstore.repository;
 
-import com.advance_academy_project.bookstore.model.Book;
+import com.advance_academy_project.bookstore.model.Ganre;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface BookRepository extends JpaRepository<Book, Long> {
+public interface GanreRepository extends JpaRepository<Ganre, Long> {
 
-    Optional<Book> findByTitle(String title);
-
-    void deleteByTitle(String title);
+    Optional<Ganre> findByGanreName(String ganreName);
 }

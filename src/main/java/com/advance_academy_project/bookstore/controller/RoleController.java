@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/{roles}")
+@RequestMapping(value = "/roles")
 public class RoleController {
 
     private RoleService roleService;
@@ -33,7 +33,7 @@ public class RoleController {
     }
 
     @DeleteMapping(value = "{roleId}")
-    public ResponseEntity<HttpStatus> deleteRoleNameById(@NonNull Long roleId){
+    public ResponseEntity<HttpStatus> deleteRoleById(@NonNull Long roleId){
         roleService.deleteRoleById(roleId);
         return ResponseEntity.ok().build();
     }
