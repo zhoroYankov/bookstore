@@ -23,10 +23,9 @@ public class Book {
     @Column(unique = true, nullable = false)
     private String title;
 
-
     @ManyToOne
     @JoinColumn(name = "ganre_id")
-    private Ganre genre;
+    private Genre genre;
 
     @ManyToOne
     @JoinColumn(name = "author_id")

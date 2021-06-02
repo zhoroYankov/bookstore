@@ -3,6 +3,7 @@ package com.advance_academy_project.bookstore;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 @SpringBootApplication
 public class BookstoreApplication {
 

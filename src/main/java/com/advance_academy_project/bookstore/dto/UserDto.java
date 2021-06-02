@@ -1,6 +1,4 @@
 package com.advance_academy_project.bookstore.dto;
-
-import com.advance_academy_project.bookstore.model.Book;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,5 +26,5 @@ public class UserDto {
 
     private String role;
 
-    private Set<Book> books;
+    private Set<BookDto> books;
 }

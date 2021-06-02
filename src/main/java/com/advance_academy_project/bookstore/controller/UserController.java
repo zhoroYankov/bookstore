@@ -1,12 +1,21 @@
 package com.advance_academy_project.bookstore.controller;
 
+import com.advance_academy_project.bookstore.converter.BookConverter;
+import com.advance_academy_project.bookstore.converter.UserFullConverter;
+import com.advance_academy_project.bookstore.converter.UserSignUpConverter;
+import com.advance_academy_project.bookstore.dto.BookDto;
 import com.advance_academy_project.bookstore.dto.UserDto;
+import com.advance_academy_project.bookstore.dto.UserSignUpDto;
+import com.advance_academy_project.bookstore.model.Book;
+import com.advance_academy_project.bookstore.model.User;
+import com.advance_academy_project.bookstore.service.BookService;
 import com.advance_academy_project.bookstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @RestController
@@ -14,44 +23,65 @@ import java.util.Set;
 public class UserController {
 
     private UserService userService;
+    private UserFullConverter userFullConverter;
+    private UserSignUpConverter userSignUpConverter;
+    private BookService bookService;
+    private BookConverter bookConverter;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService, UserFullConverter userFullConverter, UserSignUpConverter userSignUpConverter, BookService bookService, BookConverter bookConverter) {
         this.userService = userService;
+        this.userFullConverter = userFullConverter;
+        this.userSignUpConverter = userSignUpConverter;
+        this.bookService = bookService;
+        this.bookConverter = bookConverter;
     }
 
 
     @GetMapping
-    public ResponseEntity<Set<UserDto>> findAllUsers(){
-        return ResponseEntity.ok(userService.findAllUsers());
+    public ResponseEntity<Set<UserDto>> findAllUsers() {
+        Set<User> users = userService.findAll();
+        Set<UserDto> userDtos = new HashSet<>();
+
+        for (User user : users){
+            UserDto userDto = userFullConverter.convertToDto(user);
+            userDtos.add(userDto);
+        }
+
+        return ResponseEntity.ok(userDtos);
     }
 
     @GetMapping(value = "/{username}")
-    public ResponseEntity<UserDto> findUser(@PathVariable String username){
-        UserDto foundUser = userService.findByUsername(username);
-        return ResponseEntity.ok(foundUser);
+    public ResponseEntity<UserDto> findUser(@PathVariable String username) {
+        User foundUser = userService.findByUsername(username);
+        UserDto foundUserDto = userFullConverter.convertToDto(foundUser);
+        return ResponseEntity.ok(foundUserDto);
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> saveUser(@RequestBody UserDto userDto){
-        userService.saveUser(userDto);
+    public ResponseEntity<HttpStatus> saveUser(@RequestBody UserSignUpDto userSignUpDto) {
+        userService.save(userSignUpConverter.convertToEntity(userSignUpDto));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping(value = "/{username}/{title}")
-    public ResponseEntity<HttpStatus> addBook(@PathVariable String username, @RequestParam String title){
-        userService.addBookToAccound(username, title);
+    @PostMapping(value = "/{username}")
+    public ResponseEntity<HttpStatus> addBook(@PathVariable String username, @RequestBody BookDto bookDto) {
+        Book wantedBook = bookConverter.convertToEntity(bookDto);
+        userService.addBook(username,wantedBook);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping(value = "/{username}/{title}")
-    public ResponseEntity<HttpStatus> removeBook(@PathVariable String username, @RequestParam String title){
-        userService.removeBookFmAccount(username, title);
+
+
+    @PutMapping(value = "/{username}")
+    public ResponseEntity<HttpStatus> removeBook(@PathVariable String username, @RequestBody BookDto bookDto) {
+        Book wantedBook = bookConverter.convertToEntity(bookDto);
+        userService.removeBook(username, wantedBook);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping(value = "/{username}")
-    public  ResponseEntity<HttpStatus> deleteByUsername(@PathVariable String username){
+    public ResponseEntity<HttpStatus> deleteByUsername(@PathVariable String username) {
         userService.deleteByUsername(username);
         return ResponseEntity.ok().build();
     }

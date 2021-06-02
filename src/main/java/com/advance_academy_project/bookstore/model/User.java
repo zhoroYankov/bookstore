@@ -15,7 +15,9 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "users")
-public class User {
+public class User{
+
+    public enum role{CLIENT, VIP, ADMIN}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +26,7 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String password;
 
     @Column(unique = true)
@@ -40,9 +42,8 @@ public class User {
     @Min(value = 16, message = "Sorry! You should be over 16 years old!")
     private Integer age;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @Enumerated(value = EnumType.STRING)
+    private role type;
 
     @ManyToMany
     @JoinTable(
@@ -51,4 +52,5 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "books_id")
     )
     private Set<Book> books;
+
 }

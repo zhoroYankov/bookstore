@@ -1,4 +1,13 @@
 package com.advance_academy_project.bookstore.exception;
 
-public class DataAlreadyExistException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+
+@ResponseStatus(value = HttpStatus.CONFLICT)
+public class DataAlreadyExistException extends RuntimeException {
+
+    public DataAlreadyExistException(String message) {
+        super(message);
+    }
 }

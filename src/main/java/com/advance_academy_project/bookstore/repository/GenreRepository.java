@@ -1,14 +1,16 @@
 package com.advance_academy_project.bookstore.repository;
 
-import com.advance_academy_project.bookstore.model.Role;
+import com.advance_academy_project.bookstore.model.Genre;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface GenreRepository extends JpaRepository<Genre, Long> {
 
-    Optional<Role> findByRoleName(String roleName);
+    Optional<Genre> findByName(String name);
+
+    void deleteByName(String name);
 
 }

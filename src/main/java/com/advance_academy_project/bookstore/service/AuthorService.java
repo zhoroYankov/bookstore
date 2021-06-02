@@ -1,10 +1,10 @@
 package com.advance_academy_project.bookstore.service;
 
-import com.advance_academy_project.bookstore.dto.AuthorDto;
 import com.advance_academy_project.bookstore.exception.DataNotFoundException;
 import com.advance_academy_project.bookstore.model.Author;
 import com.advance_academy_project.bookstore.repository.AuthorRepository;
 import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -16,52 +16,33 @@ public class AuthorService {
 
     private final AuthorRepository authorRepository;
 
-
+    @Autowired
     public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
     }
 
-    public AuthorDto findByName(@NonNull String name) {
-        Author foundAuthor = authorRepository.findByName(name)
+    public Author findByName(@NonNull String name) {
+        return authorRepository.findByName(name)
                 .orElseThrow(() -> new DataNotFoundException(String.format("Author with name: %s does not exist.", name)));
-
-        AuthorDto authorDto = new AuthorDto();
-        authorDto.setId(foundAuthor.getId());
-        authorDto.setName(foundAuthor.getName());
-        authorDto.setBooks(foundAuthor.getBooks());
-
-        return authorDto;
     }
 
-    public Set<AuthorDto> findAllAuthors() {
-        List<Author> authors = authorRepository.findAll();
+    public Set<Author> findAll() {
+        List<Author> authorsList = authorRepository.findAll();
+        Set<Author> authors = new HashSet<>(authorsList);
 
-        Set<AuthorDto> authorDtos = new HashSet<>();
-        for (Author author : authors) {
-            AuthorDto authorDto = new AuthorDto();
-
-            authorDto.setId(author.getId());
-            authorDto.setName(author.getName());
-            authorDto.setBooks(author.getBooks());
-
-            authorDtos.add(authorDto);
-        }
-        return authorDtos;
+        return authors;
     }
 
 
-    public void saveAuthor(@NonNull AuthorDto authorDto) {
-        Author author = new Author();
+    public void save(@NonNull Author author) {
+        Author wantedAuthor = authorRepository.findByName(author.getName())
+                .orElseThrow(() -> new DataNotFoundException(String.format("Author with name %s does not exis.", author.getName())));
 
-        author.setId(authorDto.getId());
-        author.setName(authorDto.getName());
-        author.setBooks(authorDto.getBooks());
-
-        authorRepository.save(author);
+        authorRepository.save(wantedAuthor);
     }
 
 
-    public void deleteAuthor(@NonNull String name) {
+    public void delete(@NonNull String name) {
         authorRepository.deleteByName(name);
     }
 }
