@@ -17,8 +17,6 @@ import java.util.Set;
 @Table(name = "users")
 public class User{
 
-    public enum role{CLIENT, VIP, ADMIN}
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -42,8 +40,9 @@ public class User{
     @Min(value = 16, message = "Sorry! You should be over 16 years old!")
     private Integer age;
 
-    @Enumerated(value = EnumType.STRING)
-    private role type;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     @ManyToMany
     @JoinTable(

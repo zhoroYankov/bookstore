@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -34,9 +36,9 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<Set<BookDto>> findAllBooks() {
-        Set<Book> books = bookService.findAll();
-        Set<BookDto> bookDtos = new HashSet<>();
+    public ResponseEntity<List<BookDto>> findAllBooks() {
+        List<Book> books = bookService.findAll();
+        List<BookDto> bookDtos = new ArrayList<>();
 
         for (Book book : books){
             BookDto bookDto = bookConverter.convertToDto(book);

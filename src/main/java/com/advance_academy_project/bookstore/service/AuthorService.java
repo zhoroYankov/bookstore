@@ -28,7 +28,11 @@ public class AuthorService {
 
     public Set<Author> findAll() {
         List<Author> authorsList = authorRepository.findAll();
-        Set<Author> authors = new HashSet<>(authorsList);
+        Set<Author> authors = new HashSet<>();
+
+        for (Author author : authorsList){
+            authors.add(author);
+        }
 
         return authors;
     }

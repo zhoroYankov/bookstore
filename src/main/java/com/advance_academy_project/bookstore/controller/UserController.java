@@ -25,7 +25,6 @@ public class UserController {
     private UserService userService;
     private UserFullConverter userFullConverter;
     private UserSignUpConverter userSignUpConverter;
-    private BookService bookService;
     private BookConverter bookConverter;
 
     @Autowired
@@ -33,7 +32,6 @@ public class UserController {
         this.userService = userService;
         this.userFullConverter = userFullConverter;
         this.userSignUpConverter = userSignUpConverter;
-        this.bookService = bookService;
         this.bookConverter = bookConverter;
     }
 
@@ -70,7 +68,6 @@ public class UserController {
         userService.addBook(username,wantedBook);
         return ResponseEntity.ok().build();
     }
-
 
 
     @PutMapping(value = "/{username}")

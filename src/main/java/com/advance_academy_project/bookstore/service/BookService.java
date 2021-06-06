@@ -7,9 +7,8 @@ import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class BookService {
@@ -27,22 +26,21 @@ public class BookService {
         return foundBook;
     }
 
-    public Set<Book> findByGenre(String name){
+    public List<Book> findByGenre(@NonNull String name){
         List<Book> booksList = bookRepository.findAll();
-        Set<Book> wantedBooks = new HashSet<>();
+        List<Book> booksByGenre = new ArrayList<>();
         for (Book book : booksList){
             if (name.equals(book.getGenre().toString())){
-                wantedBooks.add(book);
+                booksByGenre.add(book);
             }
         }
-        return wantedBooks;
+        return booksByGenre;
     }
 
-    public Set<Book> findAll() {
+    public List<Book> findAll() {
         List<Book> booksList = bookRepository.findAll();
-        Set<Book> books = new HashSet<>(booksList);
 
-        return books;
+        return booksList;
     }
 
 

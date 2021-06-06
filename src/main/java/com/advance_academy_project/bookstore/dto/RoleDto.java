@@ -5,20 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.OneToMany;
-import java.util.Set;
-
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Builder
-public class AuthorDto {
+public class RoleDto {
 
     private Long id;
 
     private String name;
 
-    @OneToMany
-    private Set<BookDto> books;
 
 }

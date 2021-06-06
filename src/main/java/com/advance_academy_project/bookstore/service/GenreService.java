@@ -3,6 +3,7 @@ package com.advance_academy_project.bookstore.service;
 import com.advance_academy_project.bookstore.exception.DataNotFoundException;
 import com.advance_academy_project.bookstore.model.Genre;
 import com.advance_academy_project.bookstore.repository.GenreRepository;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,11 +33,12 @@ public class GenreService {
         return genres;
     }
 
-    public void save(Genre genre){
+    public void save(@NonNull Genre genre){
         genreRepository.save(genre);
     }
 
-    public void deleteByName(String name){
+    public void deleteByName(@NonNull String name){
         genreRepository.deleteByName(name);
     }
+
 }

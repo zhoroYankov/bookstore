@@ -18,13 +18,13 @@ public class UserService {
 
     private UserRepository userRepository;
     private BookService bookService;
-    private AuthorService authorService;
+    private RoleService roleService;
 
     @Autowired
-    public UserService(UserRepository userRepository,  BookService bookService, AuthorService authorService) {
+    public UserService(UserRepository userRepository,  BookService bookService, RoleService roleService) {
         this.userRepository = userRepository;
         this.bookService = bookService;
-        this.authorService = authorService;
+        this.roleService = roleService;
     }
 
 
@@ -43,15 +43,21 @@ public class UserService {
 
 
     public void save(@NonNull User user) {
-        user.setType(User.role.CLIENT);
+        user.setRole(roleService.findByName("CLIENT"));
         userRepository.save(user);
     }
 
-    public void updateRole(@NonNull String username){
+    public void updateToVIP(@NonNull String username){
         User foundUser = userRepository.findByUsername(username)
                 .orElseThrow(()-> new DataNotFoundException(String.format("User with username: %s does not exist.", username)));
-        foundUser.setType(User.role.VIP);
+        foundUser.setRole(roleService.findByName("VIP"));
         userRepository.save(foundUser);
+    }
+
+    public void updateToADMIN(@NonNull String username){
+        User foundUser = userRepository.findByUsername(username)
+                .orElseThrow(()-> new DataNotFoundException(String.format("User with username: %s does not exist.", username)));
+        foundUser.setRole(roleService.findByName("ADMIN"));
     }
 
 
