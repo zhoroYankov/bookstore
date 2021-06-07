@@ -2,7 +2,9 @@ package com.advance_academy_project.bookstore.converter;
 
 import com.advance_academy_project.bookstore.dto.RoleDto;
 import com.advance_academy_project.bookstore.model.Role;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RoleConverter {
 
     public Role convertToEntity(RoleDto roleDto){

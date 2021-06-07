@@ -28,11 +28,15 @@ public class UserController {
     private BookConverter bookConverter;
 
     @Autowired
-    public UserController(UserService userService, UserFullConverter userFullConverter, UserSignUpConverter userSignUpConverter, BookService bookService, BookConverter bookConverter) {
+    public UserController(UserService userService,
+                          UserFullConverter userFullConverter,
+                          UserSignUpConverter userSignUpConverter,
+                          BookService bookService,
+                          BookConverter bookSimpleConverter) {
         this.userService = userService;
         this.userFullConverter = userFullConverter;
         this.userSignUpConverter = userSignUpConverter;
-        this.bookConverter = bookConverter;
+        this.bookConverter = bookSimpleConverter;
     }
 
 
@@ -63,16 +67,16 @@ public class UserController {
     }
 
     @PostMapping(value = "/{username}")
-    public ResponseEntity<HttpStatus> addBook(@PathVariable String username, @RequestBody BookDto bookDto) {
-        Book wantedBook = bookConverter.convertToEntity(bookDto);
+    public ResponseEntity<HttpStatus> addBook(@PathVariable String username, @RequestBody BookDto bookSimpleDto) {
+        Book wantedBook = bookConverter.convertToEntity(bookSimpleDto);
         userService.addBook(username,wantedBook);
         return ResponseEntity.ok().build();
     }
 
 
     @PutMapping(value = "/{username}")
-    public ResponseEntity<HttpStatus> removeBook(@PathVariable String username, @RequestBody BookDto bookDto) {
-        Book wantedBook = bookConverter.convertToEntity(bookDto);
+    public ResponseEntity<HttpStatus> removeBook(@PathVariable String username, @RequestBody BookDto bookSimpleDto) {
+        Book wantedBook = bookConverter.convertToEntity(bookSimpleDto);
         userService.removeBook(username, wantedBook);
         return ResponseEntity.ok().build();
     }

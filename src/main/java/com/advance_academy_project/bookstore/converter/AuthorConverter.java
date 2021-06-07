@@ -7,8 +7,8 @@ import com.advance_academy_project.bookstore.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class AuthorConverter {
@@ -22,8 +22,8 @@ public class AuthorConverter {
 
 
     public Author convertToEntity(AuthorDto authorDto) {
-        Set<Book> books = new HashSet<>();
-        Set<BookDto> bookDtos = authorDto.getBooks();
+        List<Book> books = new ArrayList<>();
+        List<BookDto> bookDtos = authorDto.getBooks();
 
         for (BookDto bookDto : bookDtos) {
             Book book = bookConverter.convertToEntity(bookDto);
@@ -39,8 +39,8 @@ public class AuthorConverter {
     }
 
     public AuthorDto convertToDto(Author author) {
-        Set<BookDto> bookDtos = new HashSet<>();
-        Set<Book> books = author.getBooks();
+        List<BookDto> bookDtos = new ArrayList<>();
+        List<Book> books = author.getBooks();
 
         for (Book book : books) {
             BookDto bookDto = bookConverter.convertToDto(book);

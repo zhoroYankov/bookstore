@@ -5,8 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.OneToMany;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -18,7 +17,6 @@ public class AuthorDto {
 
     private String name;
 
-    @OneToMany
-    private Set<BookDto> books;
+    private List<BookDto> books;
 
 }

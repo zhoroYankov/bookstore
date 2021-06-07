@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class GenreService {
@@ -29,7 +30,7 @@ public class GenreService {
 
     public Set<Genre> findAll(){
         List<Genre> genreList = genreRepository.findAll();
-        Set<Genre> genres = new HashSet<>(genreList);
+        Set<Genre> genres = genreList.stream().collect(Collectors.toSet());
         return genres;
     }
 

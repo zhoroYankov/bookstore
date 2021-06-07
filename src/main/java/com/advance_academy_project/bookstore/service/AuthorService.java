@@ -7,9 +7,9 @@ import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthorService {
@@ -21,20 +21,14 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    public Author findByName(@NonNull String name) {
+    public Author findByName(String name) {
         return authorRepository.findByName(name)
                 .orElseThrow(() -> new DataNotFoundException(String.format("Author with name: %s does not exist.", name)));
     }
 
-    public Set<Author> findAll() {
+    public List<Author> findAll() {
         List<Author> authorsList = authorRepository.findAll();
-        Set<Author> authors = new HashSet<>();
-
-        for (Author author : authorsList){
-            authors.add(author);
-        }
-
-        return authors;
+        return authorsList;
     }
 
 

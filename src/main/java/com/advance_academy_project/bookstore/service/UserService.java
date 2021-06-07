@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -30,7 +31,7 @@ public class UserService {
 
     public Set<User> findAll() {
         List<User> usersList = userRepository.findAll();
-        Set<User> users = new HashSet<>(usersList);
+        Set<User> users = usersList.stream().collect(Collectors.toSet());
 
         return users;
     }

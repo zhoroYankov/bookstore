@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -33,9 +35,9 @@ public class AuthorController {
     }
 
     @GetMapping
-    public ResponseEntity<Set<AuthorDto>> findAllAuthors(){
-       Set<Author> authors = authorService.findAll();
-       Set<AuthorDto> authorDtos = new HashSet<>();
+    public ResponseEntity<List<AuthorDto>> findAllAuthors(){
+       List<Author> authors = authorService.findAll();
+       List<AuthorDto> authorDtos = new ArrayList<>();
 
        for (Author author : authors){
            AuthorDto authorDto = authorConverter.convertToDto(author);

@@ -9,7 +9,6 @@ public class UserSignUpConverter {
 
     public User convertToEntity(UserSignUpDto userSignUpDto){
         User user =  User.builder()
-                .id(userSignUpDto.getId())
                 .email(userSignUpDto.getEmail())
                 .username(userSignUpDto.getUsername())
                 .firstName(userSignUpDto.getFirstName())

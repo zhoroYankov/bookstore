@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class RoleService {
@@ -32,7 +33,7 @@ public class RoleService {
 
     public Set<Role> findAll() {
         List<Role> rolesList = roleRepository.findAll();
-        Set<Role> roles = new HashSet<>(rolesList);
+        Set<Role> roles = rolesList.stream().collect(Collectors.toSet());
         return roles;
     }
 

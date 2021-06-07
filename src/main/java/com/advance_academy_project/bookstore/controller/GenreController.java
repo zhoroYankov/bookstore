@@ -25,7 +25,7 @@ public class GenreController {
         this.genreConverter = genreConverter;
     }
 
-    @GetMapping(value = "/name")
+    @GetMapping(value = "/{name}")
     public ResponseEntity<GenreDto> findByName(@PathVariable String name) {
         Genre genre = genreService.findByName(name);
         GenreDto genreDto = genreConverter.convertToDto(genre);
@@ -50,7 +50,7 @@ public class GenreController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @DeleteMapping(value = "/name")
+    @DeleteMapping(value = "/{name}")
     public ResponseEntity<HttpStatus> delete(@PathVariable String name){
         genreService.deleteByName(name);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);

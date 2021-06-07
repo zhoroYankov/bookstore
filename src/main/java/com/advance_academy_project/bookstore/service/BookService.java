@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -20,27 +23,27 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public Book findByTitle(@NonNull String title) {
+    public Book findByTitle(String title) {
         Book foundBook = bookRepository.findByTitle(title).
                 orElseThrow(() -> new DataNotFoundException(String.format("Book with title: %s does not exist.", title)));
         return foundBook;
     }
 
-    public List<Book> findByGenre(@NonNull String name){
+    public List<Book> findAllByGenre(String genre){
         List<Book> booksList = bookRepository.findAll();
-        List<Book> booksByGenre = new ArrayList<>();
+        List<Book> wantedBooks = new ArrayList<>();
         for (Book book : booksList){
-            if (name.equals(book.getGenre().toString())){
-                booksByGenre.add(book);
+            if (genre.equals(book.getGenre().toString())){
+                wantedBooks.add(book);
             }
         }
-        return booksByGenre;
+        return wantedBooks;
     }
 
     public List<Book> findAll() {
-        List<Book> booksList = bookRepository.findAll();
+        List<Book> books = bookRepository.findAll();
 
-        return booksList;
+        return books;
     }
 
 
